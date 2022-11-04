@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 
 export default function TextArea() {
-    const [text, setText] = useState("Enter text here...");
+    const [text, setText] = useState("");
 
     let handleOnchange = (e)=>{
         setText(e.target.value);
@@ -26,7 +26,7 @@ export default function TextArea() {
         </div>
         <div className="row">
           <div className="my-3">
-            <textarea className="form-control" value={text} onChange={handleOnchange} id="exampleFormControlTextarea1" rows="10"></textarea>
+            <textarea className="form-control" placeholder='Enter text here' value={text} onChange={handleOnchange} id="exampleFormControlTextarea1" rows="10"></textarea>
           </div>
         </div>
         <div className="row gap-1 d-flex align-items-center justify-content-center">
