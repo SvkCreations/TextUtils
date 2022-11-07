@@ -4,9 +4,30 @@ body,html{
   text-align: left;
 }
 .row-header{
-  background-color: blueviolet;
-  color: floralwhite;
+  /* background-color: #100027; */
+  /* color: floralwhite; */
   min-height: 300px;
   margin: 0 auto;
-  padding: 60px 0 60px 0;
+  padding: 40px 0 40px 0;
 }
+
+/* .secondary-btn{
+  background-color: none;
+  color:#5001c0;
+  border: 2px solid #ffc107;
+}
+.secondary-btn:hover{
+  background-color: #ffc107;
+  color: black;
+  transition-duration: .5s;
+}
+.primary-btn{
+  background-color: #ffc107;
+  color:black;
+  border: 2px solid #ffc107;
+}
+.primary-btn:hover{
+  background-color: #c99700;
+  color: black;
+  transition-duration: .5s;
+} */
