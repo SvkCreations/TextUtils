@@ -61,9 +61,9 @@ export default function TextArea(props) {
                         <p>Created by Soubhik Ghosh</p>
                     </div>
                     <div className="col col-md-auto icons ms-auto">
-                    <a href="facebook.com/"><iconify-icon icon="akar-icons:facebook-fill" style={{color:"#59319d", fontSize:"24px", marginRight:"12px"}}></iconify-icon></a>
-                    <a href="instagram.com/"><iconify-icon icon="akar-icons:instagram-fill"style={{color:"#59319d", fontSize:"24px", marginRight:"12px"}}></iconify-icon></a>
-                    <a href="tell:+91 8240703010"><iconify-icon icon="akar-icons:whatsapp-fill" style={{color:"#59319d", fontSize:"24px", marginRight:"12px"}}></iconify-icon></a>
+                    <a href="https://www.facebook.com/profile.php?id=100006403426982" target="blank"><iconify-icon icon="akar-icons:facebook-fill" style={{color:"#59319d", fontSize:"24px", marginRight:"12px"}}></iconify-icon></a>
+                    <a href="https://www.instagram.com/itzsvk" target="blank"><iconify-icon icon="akar-icons:instagram-fill"style={{color:"#59319d", fontSize:"24px", marginRight:"12px"}}></iconify-icon></a>
+                    <a href="https://wa.me/+918240703010"><iconify-icon icon="akar-icons:whatsapp-fill" style={{color:"#59319d", fontSize:"24px", marginRight:"12px"}}></iconify-icon></a>
                     </div>
                 </div>
             </footer>
