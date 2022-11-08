@@ -1,6 +1,7 @@
 import './App.css';
 import Navbar from './components/Navbar';
 import TextArea from './components/TextArea';
+import Footer from './components/Footer';
 import React, { useState } from 'react'
 
 function App() {
@@ -22,6 +23,11 @@ function App() {
     backgroundColor: "auto",
     color: "auto"
   })
+  const [iconStyle, seticonStyle] = useState({
+    color: "#6200ee",
+    fontSize:"30px",
+  })
+
   let toggleMode = () => {
     if (style.backgroundColor === "#6200ee") {
       setStyle({
@@ -49,6 +55,11 @@ function App() {
         outline: "none",
         border: "none"
       })
+      seticonStyle({
+        color: "#ffc107",
+        fontSize:"30px",
+        transitionDuration:".5s"
+      })
       document.body.style.cssText = "background-color: black; color: floralwhite; transition-duration:.75s"
     }
     else {
@@ -74,13 +85,19 @@ function App() {
         color: "black",
         transitionDuration: ".75s"
       })
+      seticonStyle({
+        color: "#6200ee",
+        fontSize:"30px",
+        transitionDuration:".5s"
+      })
       document.body.style.cssText = "background-color: white; color: black; transition-duration:.75s"
     }
   }
   return (
     <div className="App">
       <Navbar style={style} toggleMode={toggleMode}></Navbar>
-      <TextArea scBtnStyle={scBtnStyle} prBtnStyle={prBtnStyle} inpStyle={inpStyle}></TextArea>
+      <TextArea scBtnStyle={scBtnStyle} prBtnStyle={prBtnStyle} inpStyle={inpStyle} iconStyle={iconStyle}></TextArea>
+      <Footer></Footer>
     </div>
   );
 }
