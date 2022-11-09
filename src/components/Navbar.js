@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import { Link } from 'react-router-dom';
 export default function Navbar(props) {
   return (
     <div>
@@ -16,10 +17,10 @@ export default function Navbar(props) {
             <p className="lead py-3 col-md-8">We provide you with so many options to utilize your text like counting words, letters, convert the text to uppercase and many more. You can also copy the converted text to your clipboard by just clicking the copy button.</p>
             <div className="row mt-3 gap-2 gap-md-0">
               <div className="col-md-auto">
-                <button className="btn btn-lg btn-warning col-12">Start utilizing</button>
+                <Link className="btn btn-lg btn-warning col-12" to="/textutils">Start utilizing</Link>
               </div>
               <div className="col-md-auto">
-                <button className="btn btn-lg btn-outline-light col-12">Learn more</button>
+                <Link className="btn btn-lg btn-outline-light col-12" to="/about">Learn more</Link>
               </div>
             </div>
           </div>

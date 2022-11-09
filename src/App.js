@@ -2,7 +2,13 @@ import './App.css';
 import Navbar from './components/Navbar';
 import TextArea from './components/TextArea';
 import Footer from './components/Footer';
-import React, { useState } from 'react'
+import About from './components/About';
+import React, { useState } from 'react';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route
+} from "react-router-dom";
 
 function App() {
   const [scBtnStyle, setscBtnStyle] = useState({
@@ -25,7 +31,11 @@ function App() {
   })
   const [iconStyle, seticonStyle] = useState({
     color: "#6200ee",
-    fontSize:"30px",
+    fontSize: "30px",
+  })
+  const [imgStyle, setimgStyle] = useState({
+    boxShadow:"none",
+    width: "450px"
   })
 
   let toggleMode = () => {
@@ -48,7 +58,7 @@ function App() {
         transitionDuration: ".75s"
       })
       setinpStyle({
-        background:"none",
+        background: "none",
         color: "floralwhite",
         transitionDuration: ".75s",
         boxShadow: "2px 2px 120px -10px rgba(80,1,192,0.75)",
@@ -57,8 +67,13 @@ function App() {
       })
       seticonStyle({
         color: "#ffc107",
-        fontSize:"30px",
-        transitionDuration:".5s"
+        fontSize: "30px",
+        transitionDuration: ".5s"
+      })
+      setimgStyle({
+        boxShadow: "2px 2px 120px -10px rgba(80,1,192,0.75)",
+        width: "450px",
+        border:"4px solid white"
       })
       document.body.style.cssText = "background-color: black; color: floralwhite; transition-duration:.75s"
     }
@@ -87,18 +102,29 @@ function App() {
       })
       seticonStyle({
         color: "#6200ee",
-        fontSize:"30px",
-        transitionDuration:".5s"
+        fontSize: "30px",
+        transitionDuration: ".5s"
+      })
+      setimgStyle({
+        boxShadow: "none",
+        width: "450px"
       })
       document.body.style.cssText = "background-color: white; color: black; transition-duration:.75s"
     }
   }
   return (
-    <div className="App">
-      <Navbar style={style} toggleMode={toggleMode}></Navbar>
-      <TextArea scBtnStyle={scBtnStyle} prBtnStyle={prBtnStyle} inpStyle={inpStyle} iconStyle={iconStyle}></TextArea>
-      <Footer></Footer>
-    </div>
+    <Router>
+      <div className="App">
+        <Navbar style={style} toggleMode={toggleMode}></Navbar>
+        {/* <TextArea scBtnStyle={scBtnStyle} prBtnStyle={prBtnStyle} inpStyle={inpStyle} iconStyle={iconStyle}></TextArea> */}
+        <Routes>
+        <Route exact path="/" element={<TextArea scBtnStyle={scBtnStyle} prBtnStyle={prBtnStyle} inpStyle={inpStyle} iconStyle={iconStyle}></TextArea>} />
+          <Route exact path="/textutils" element={<TextArea scBtnStyle={scBtnStyle} prBtnStyle={prBtnStyle} inpStyle={inpStyle} iconStyle={iconStyle}></TextArea>} />
+          <Route exact path="/about" element={<About imgStyle={imgStyle}/>} />
+        </Routes>
+        <Footer></Footer>
+      </div>
+    </Router>
   );
 }
 

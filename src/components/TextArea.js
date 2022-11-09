@@ -58,9 +58,10 @@ export default function TextArea(props) {
             alerts.classList.add('alert')
         }
         else {
-            let esText = text.replaceAll("  ", "");
-            setText(esText)
+            let esText = text.replace(/\s+/g, ' ').trim();
+            setText(esText)         
             showAlert("success", "Extra spaces removed.");
+
         }
     }
     let handleRsClick = () => {
@@ -117,7 +118,7 @@ export default function TextArea(props) {
                 </div>
                 <div className="row d-flex">
                     <div className="col-3 flex-grow-1 align-self-center">
-                        <p className="lead"><span style={{ color: "#59319d", fontWeight: "bold" }}>{text.length == 0 || text.endsWith(' ') ? (text.split(' ').length) - 1 : text.split(' ').length}</span> Words, <span style={{ color: "#59319d", fontWeight: "bold" }}>{text.length}</span> Characters</p>
+                        <p className="lead"><span style={{ color: "#59319d", fontWeight: "bold" }}>{text.length === 0 || text.endsWith(' ') ? (text.split(' ').length) - 1 : text.split(' ').length}</span> Words, <span style={{ color: "#59319d", fontWeight: "bold" }}>{text.length}</span> Characters</p>
                         <p className={`fw-bold text-${alert.typ} m-0 p-0`} id="alert" style={alert.style}>{alert.msg}</p>
                     </div>
                 </div>
