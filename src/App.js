@@ -9,7 +9,7 @@ import {
   Routes,
   Route
 } from "react-router-dom";
-import Sidebar from './Sidebar';
+import Sidebar from './components/Sidebar';
 
 function App() {
   const [sbStyle, setsbStyle] = useState({
@@ -130,8 +130,8 @@ function App() {
   return (
     <Router>
       <div className="App">
+      <Sidebar sbstyle={sbStyle} toggleMode={toggleMode}></Sidebar>
         <Navbar style={style} toggleMode={toggleMode}></Navbar>
-        <Sidebar style={sbStyle} toggleMode={toggleMode}></Sidebar>
         {/* <TextArea scBtnStyle={scBtnStyle} prBtnStyle={prBtnStyle} inpStyle={inpStyle} iconStyle={iconStyle}></TextArea> */}
         <Routes>
         <Route exact path="/" element={<TextArea scBtnStyle={scBtnStyle} prBtnStyle={prBtnStyle} inpStyle={inpStyle} iconStyle={iconStyle} sbStyle={sbStyle}></TextArea>} />
