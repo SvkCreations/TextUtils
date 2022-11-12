@@ -4,7 +4,7 @@ import soubhik from '../soubhik.jpeg';
 
 function About(props) {
   return (
-    <div className='container mt-5 px-4 px-md-0'>
+    <div className='container mt-5 px-4 px-md-0' id="about">
       <h2 className="display-6 fw-bold">About Us</h2>
       <hr />
       <p className="lead">TextUtils is a text utilizing or analyzing web application created with ReactJS library in the year 2022. We provide you with so many options to analyze your text like counting words, letters, convert the text to uppercase, lowercase and many more. You can also copy the converted text to your clipboard by just clicking the copy button.<br></br>

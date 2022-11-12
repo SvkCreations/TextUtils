@@ -9,8 +9,13 @@ import {
   Routes,
   Route
 } from "react-router-dom";
+import Sidebar from './Sidebar';
 
 function App() {
+  const [sbStyle, setsbStyle] = useState({
+    backgroundColor: "white",
+    color: "black",
+  })
   const [scBtnStyle, setscBtnStyle] = useState({
     backgroundColor: "none",
     color: "#6200ee",
@@ -45,6 +50,11 @@ function App() {
         color: "floralwhite",
         transitionDuration: ".75s"
       })
+      setsbStyle({
+        backgroundColor:"#121212",
+        color:"white",
+        transition:".75s ease"
+      })
       setscBtnStyle({
         backgroundColor: "none",
         color: "#ffc107",
@@ -78,6 +88,11 @@ function App() {
       document.body.style.cssText = "background-color: black; color: floralwhite; transition-duration:.75s"
     }
     else {
+      setsbStyle({
+        backgroundColor:"white",
+        color:"black",
+        transition:".75s ease"
+      })
       setStyle({
         backgroundColor: "#6200ee",
         color: "floralwhite",
@@ -116,10 +131,11 @@ function App() {
     <Router>
       <div className="App">
         <Navbar style={style} toggleMode={toggleMode}></Navbar>
+        <Sidebar style={sbStyle} toggleMode={toggleMode}></Sidebar>
         {/* <TextArea scBtnStyle={scBtnStyle} prBtnStyle={prBtnStyle} inpStyle={inpStyle} iconStyle={iconStyle}></TextArea> */}
         <Routes>
-        <Route exact path="/" element={<TextArea scBtnStyle={scBtnStyle} prBtnStyle={prBtnStyle} inpStyle={inpStyle} iconStyle={iconStyle}></TextArea>} />
-          <Route exact path="/textutils" element={<TextArea scBtnStyle={scBtnStyle} prBtnStyle={prBtnStyle} inpStyle={inpStyle} iconStyle={iconStyle}></TextArea>} />
+        <Route exact path="/" element={<TextArea scBtnStyle={scBtnStyle} prBtnStyle={prBtnStyle} inpStyle={inpStyle} iconStyle={iconStyle} sbStyle={sbStyle}></TextArea>} />
+          <Route exact path="/textutils" element={<TextArea scBtnStyle={scBtnStyle} prBtnStyle={prBtnStyle} inpStyle={inpStyle} iconStyle={iconStyle} sbStyle={sbStyle}></TextArea>} />
           <Route exact path="/about" element={<About imgStyle={imgStyle}/>} />
         </Routes>
         <Footer></Footer>
