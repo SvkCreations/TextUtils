@@ -11,7 +11,7 @@ export default function Sidebar(props) {
             <div className="offcanvas offcanvas-end p-3" data-bs-scroll="true" tabIndex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel" style={props.sbstyle}>
                 <div className="offcanvas-header">
                     <h5 className="offcanvas-title" id="offcanvasExampleLabel">Settings</h5>
-                    <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    <button type="button" className={`btn-close ${props.closeClass}`} data-bs-dismiss="offcanvas" id="close-btn" aria-label="Close"></button>
                 </div>
                 <div className="offcanvas-body d-flex flex-shrink-0 flex-column">
                     <div>

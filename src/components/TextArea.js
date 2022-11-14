@@ -7,6 +7,7 @@ export default function TextArea(props) {
     const find = document.getElementById('find')
     const replace = document.getElementById('replace')
     const find01 = document.getElementById('find01')
+    const preview = document.getElementById('preview')
     const [modalAlert, setmodalAlert] = useState("");
     const [alert, setAlert] = useState({
         style: {
@@ -42,7 +43,7 @@ export default function TextArea(props) {
 
     let handleOnchange = (e) => {
         setText(e.target.value);
-        setAlert({});
+        showAlert("", "")
     }
     let handleUpClick = () => {
         if (text === "") {
@@ -93,7 +94,6 @@ export default function TextArea(props) {
     let handleClrClick = () => {
         if (text === "") {
             showAlert("danger", "Textbox is empty")
-            alert("Your browser doesn't allow automatic copying. Try copying manually.")
             alerts.classList.add('alert')
         }
         else {
@@ -149,8 +149,8 @@ export default function TextArea(props) {
         }
     }
     let handleReplace = () => {
-        let findTxt = find.value;
-        let replaceTxt = replace.value;
+        let findTxt = find.value.toLowerCase();
+        let replaceTxt = replace.value.toLowerCase();
         let replacedTxt = text.toLowerCase().replaceAll(findTxt, replaceTxt);
         setText(replacedTxt)
         showAlert("success", `"${findTxt}" replaced with "${replaceTxt}"`);
@@ -161,89 +161,158 @@ export default function TextArea(props) {
             let count = countString(text.toLowerCase(), findTxt);
             showAlert("success", `There are ${count} occurences of "${findTxt}" in the text typed below.`);
         }
-        else{
+        else {
             showAlert("danger", "Textbox is empty");
         }
     }
 
+    let handleTypeError = () => {
+        var filetypeError = document.getElementById('filetypeError');
+        var file = document.querySelector('input[type=file]').files[0];
+        var reader = new FileReader()
+        var textFile = /text.*/;
+        if (file.type.match(textFile)) {
+            reader.onload = function (event) {
+                filetypeError.innerHTML = "";
+                showAlert("", "")
+            }
+        } else {
+            filetypeError.innerText = "That didn't seem to be a text file!"
+        }
+        reader.readAsText(file);
+    }
 
 
-    return (
-        <div>
-            <div className="container px-4 px-md-0" id="textarea">
-                <div className="row mt-4">
-                    <h1 className="display-6 fw-bold">Type in any text to Analyze.</h1>
-                </div>
-                <div className="row d-flex">
-                    <div className="col-3 flex-grow-1 align-self-center">
-                        <p className="lead"><span style={{ color: "#59319d", fontWeight: "bold" }}>{text.length === 0 || text.endsWith(' ') ? (text.split(' ').length) - 1 : text.split(' ').length}</span> Words, <span style={{ color: "#59319d", fontWeight: "bold" }}>{text.length}</span> Characters</p>
-                        <p className={`fw-bold text-${alert.typ} m-0 p-0`} id="alert" style={alert.style}>{alert.msg}</p>
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col-auto ms-auto">
-                        <button className="btn mx-1 px-0"><iconify-icon icon="ri:phone-find-line" style={props.iconStyle} onClick={findIconClick} data-bs-toggle="modal" data-bs-target="#findModal"></iconify-icon></button>
-                        <button className="btn mx-1 px-0"><iconify-icon icon="codicon:replace-all" style={props.iconStyle} data-bs-toggle="modal" data-bs-target="#replaceModal" onClick={rpIconClick}></iconify-icon></button>
-                        <button className="btn"><iconify-icon icon="akar-icons:copy" style={props.iconStyle} onClick={handleCopyClick}></iconify-icon></button>
-                        <button className="btn p-0 m-0 mx-md-1" onClick={handleClrClick}><iconify-icon icon="ant-design:delete-outlined" style={props.iconStyle}></iconify-icon></button>
+if (window.File && window.FileReader && window.FileList && window.Blob) {
+    var showFile = () => {
+        var filetypeError = document.getElementById('filetypeError');
+        var preview = document.getElementById('preview');
+        var file = document.querySelector('input[type=file]').files[0];
+        var reader = new FileReader()
 
-                    </div>
-                    <div className="mb-4">
-                        <textarea className="form-control p-3" id="copytxt" placeholder='Enter text here...' value={text} onChange={handleOnchange} rows="10" style={props.inpStyle} spellCheck="true"></textarea>
-                    </div>
-                </div>
-                <div className="row gap-2 d-flex align-items-center justify-content-center mb-5">
-                    <button className="btn col-5 col-md-2" onClick={handleUpClick} style={props.scBtnStyle}>Convert to Uppercase</button>
-                    <button className="btn col-5 col-md-2" onClick={handleLowClick} style={props.scBtnStyle}>Convert to Lowercase</button>
-                    <button className="btn col-5 col-md-2" onClick={handleEsClick} style={props.scBtnStyle}>Remove extra spaces</button>
-                    <button className="btn col-5 col-md-2" onClick={handleRsClick} style={props.scBtnStyle}>Remove all the spaces</button>
+        var textFile = /text.*/;
+
+        if (file.type.match(textFile)) {
+            reader.onload = function (event) {
+                setText(event.target.result);
+                preview.innerHTML = event.target.result
+                filetypeError.innerHTML = "";
+                showAlert("", "")
+            }
+        } else {
+            filetypeError.innerText = "That didn't seem to be a text file!"
+            showAlert("danger", "That didn't seem to be a text file!")
+        }
+        reader.readAsText(file);
+    }
+} else {
+    alert("Your browser is too old to support HTML5 File API");
+
+}
+
+
+
+
+return (
+    <div>
+        <div className="container px-4 px-md-0" id="textarea">
+            <div className="row mt-4">
+                <h1 className="display-6 fw-bold">Type in any text to Analyze.</h1>
+            </div>
+            <div className="row d-flex">
+                <div className="col-3 flex-grow-1 align-self-center">
+                    <p className="lead"><span style={{ color: "#59319d", fontWeight: "bold" }}>{text.length === 0 || text.endsWith(' ') ? (text.split(' ').length) - 1 : text.split(' ').length}</span> Word(s), <span style={{ color: "#59319d", fontWeight: "bold" }}>{text.length}</span> Character(s)</p>
+                    <p className={`fw-bold text-${alert.typ} m-0 p-0`} id="alert" style={alert.style}>{alert.msg}</p>
                 </div>
             </div>
+            <div className="row">
+                <div className="col-auto ms-auto">
+                    <button className="btn mx-2 px-0"><iconify-icon icon="ant-design:import-outlined" style={props.iconStyle} data-bs-toggle="modal" data-bs-target="#importModal"></iconify-icon></button>
+                    <button className="btn mx-1 px-0"><iconify-icon icon="ri:phone-find-line" style={props.iconStyle} onClick={findIconClick} data-bs-toggle="modal" data-bs-target="#findModal"></iconify-icon></button>
+                    <button className="btn mx-1 px-0"><iconify-icon icon="codicon:replace-all" style={props.iconStyle} data-bs-toggle="modal" data-bs-target="#replaceModal" onClick={rpIconClick}></iconify-icon></button>
+                    <button className="btn"><iconify-icon icon="akar-icons:copy" style={props.iconStyle} onClick={handleCopyClick}></iconify-icon></button>
+                    <button className="btn p-0 m-0 mx-md-1" onClick={handleClrClick}><iconify-icon icon="ant-design:delete-outlined" style={props.iconStyle}></iconify-icon></button>
 
-            {/* Replace Modal */}
-            <div className="modal fade" id="replaceModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div className="modal-dialog modal-dialog-centered">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h1 className="modal-title fs-5" id="exampleModalLabel" style={{ color: "black" }}>Find and replace</h1>
-                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div className="modal-body">
-                            <p className={`fw-bold text-danger m-0 p-0`} id="alert">{modalAlert}</p>
-                            <form action="">
-                                <input type="text" className='form-control mt-2' id="find" placeholder='What to find..' />
-                                <input type="text" className='form-control my-3' id='replace' placeholder='Replace with...' />
-                            </form>
-                        </div>
-                        <div className="modal-footer">
-                            <button type="button" className="btn btn-primary" onClick={handleReplace} data-bs-dismiss="modal" aria-label="Close">Replace all</button>
-                        </div>
+
+                </div>
+                <div className="mb-4">
+                    <textarea className="form-control p-3" id="copytxt" placeholder='Enter text here...' value={text} onChange={handleOnchange} rows="10" style={props.inpStyle} spellCheck="true"></textarea>
+                </div>
+            </div>
+            <div className="row gap-2 d-flex align-items-center justify-content-center mb-5">
+                <button className="btn col-5 col-md-2" onClick={handleUpClick} style={props.scBtnStyle}>Convert to Uppercase</button>
+                <button className="btn col-5 col-md-2" onClick={handleLowClick} style={props.scBtnStyle}>Convert to Lowercase</button>
+                <button className="btn col-5 col-md-2" onClick={handleEsClick} style={props.scBtnStyle}>Remove extra spaces</button>
+                <button className="btn col-5 col-md-2" onClick={handleRsClick} style={props.scBtnStyle}>Remove all the spaces</button>
+            </div>
+        </div>
+
+        {/* Replace Modal */}
+        <div className="modal fade" id="replaceModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div className="modal-dialog modal-dialog-centered">
+                <div className="modal-content">
+                    <div className="modal-header">
+                        <h1 className="modal-title fs-5" id="exampleModalLabel" style={{ color: "black" }}>Find and replace</h1>
+                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div className="modal-body">
+                        <p className={`fw-bold text-danger m-0 p-0`} id="alert">{modalAlert}</p>
+                        <form action="">
+                            <input type="text" className='form-control mt-2' id="find" placeholder='What to find..' />
+                            <input type="text" className='form-control my-3' id='replace' placeholder='Replace with...' />
+                        </form>
+                    </div>
+                    <div className="modal-footer">
+                        <button type="button" className="btn btn-primary" onClick={handleReplace} data-bs-dismiss="modal" aria-label="Close">Replace all</button>
                     </div>
                 </div>
             </div>
+        </div>
 
 
-            {/* Find Modal */}
-            <div className="modal fade" id="findModal" tabIndex="-1" aria-labelledby="findModalLabel" aria-hidden="true">
-                <div className="modal-dialog modal-dialog-centered">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h1 className="modal-title fs-5" id="findModalLabel" style={{ color: "black" }}>Find</h1>
-                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div className="modal-body">
-                            <p className={`fw-bold text-danger m-0 p-0`} id="alert">{modalAlert}</p>
-                            <form action="">
-                                <input type="text" className='form-control mt-2' id="find01" placeholder='What to find..' />
-                            </form>
-                        </div>
-                        <div className="modal-footer">
-                            <button type="button" className="btn btn-primary" onClick={handleFindClick} data-bs-dismiss="modal" aria-label="Close">Find</button>
-                        </div>
+        {/* Find Modal */}
+        <div className="modal fade" id="findModal" tabIndex="-1" aria-labelledby="findModalLabel" aria-hidden="true">
+            <div className="modal-dialog modal-dialog-centered">
+                <div className="modal-content">
+                    <div className="modal-header">
+                        <h1 className="modal-title fs-5" id="findModalLabel" style={{ color: "black" }}>Find</h1>
+                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div className="modal-body">
+                        <p className={`fw-bold text-danger m-0 p-0`} id="alert">{modalAlert}</p>
+                        <form action="">
+                            <input type="text" className='form-control mt-2' id="find01" placeholder='What to find..' />
+                        </form>
+                    </div>
+                    <div className="modal-footer">
+                        <button type="button" className="btn btn-primary" onClick={handleFindClick} data-bs-dismiss="modal" aria-label="Close">Find</button>
                     </div>
                 </div>
             </div>
+        </div>
 
-        </div >
-    )
+        {/* Import Modal */}
+        <div className="modal fade" id="importModal" tabIndex="-1" aria-labelledby="importModalLabel" aria-hidden="true">
+            <div className="modal-dialog modal-dialog-centered">
+                <div className="modal-content">
+                    <div className="modal-header">
+                        <h1 className="modal-title fs-5" id="importModalLabel" style={{ color: "black" }}>Import text from a file</h1>
+                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div className="modal-body">
+                        <div className="mb-3">
+                            <label for="formFileSm" className="form-label">Please choose a text file (with .txt extension)</label>
+                            <input className="form-control form-control-sm" id="formFileSm" type="file" onChange={handleTypeError} />
+                            <p className="text-danger pt-3" id="filetypeError"></p>
+                        </div>
+                    </div>
+                    <div className="modal-footer">
+                        <button type="button" className="btn btn-primary" data-bs-dismiss="modal" onClick={showFile} aria-label="Close">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div >
+)
 }

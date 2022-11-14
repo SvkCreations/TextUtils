@@ -42,6 +42,7 @@ function App() {
     boxShadow:"none",
     width: "450px"
   })
+  const[closeClass,setcloseClass]=useState("");
 
   let toggleMode = () => {
     if (style.backgroundColor === "#6200ee") {
@@ -85,6 +86,7 @@ function App() {
         width: "450px",
         border:"4px solid white"
       })
+      setcloseClass("btn-close-white")
       document.body.style.cssText = "background-color: black; color: floralwhite; transition-duration:.75s"
     }
     else {
@@ -124,13 +126,14 @@ function App() {
         boxShadow: "none",
         width: "450px"
       })
+      setcloseClass("")
       document.body.style.cssText = "background-color: white; color: black; transition-duration:.75s"
     }
   }
   return (
     <Router>
       <div className="App">
-      <Sidebar sbstyle={sbStyle} toggleMode={toggleMode}></Sidebar>
+      <Sidebar sbstyle={sbStyle} toggleMode={toggleMode} closeClass={closeClass}></Sidebar>
         <Navbar style={style} toggleMode={toggleMode}></Navbar>
         {/* <TextArea scBtnStyle={scBtnStyle} prBtnStyle={prBtnStyle} inpStyle={inpStyle} iconStyle={iconStyle}></TextArea> */}
         <Routes>
